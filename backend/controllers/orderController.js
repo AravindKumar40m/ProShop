@@ -108,7 +108,9 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @access Private/admin
 
 const getOrders = asyncHandler(async (req, res) => {
-  res.send("get all orders");
+  const order = await Order.find({}).populate("user", "id name");
+
+  res.status(200).json(order);
 });
 
 export {
