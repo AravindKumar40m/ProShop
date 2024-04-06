@@ -1,10 +1,10 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
+import Message from "../Message";
+import Loader from "../Loader";
 import { Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { useGetOrdersQuery } from "../slice/orderApiSlice";
+import { useGetOrdersQuery } from "../../slice/orderApiSlice";
 
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
