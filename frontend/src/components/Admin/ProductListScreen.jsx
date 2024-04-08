@@ -6,6 +6,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../slice/productsApiSlice";
 import { toast } from "react-toastify";
@@ -15,7 +16,20 @@ const ProductListScreen = () => {
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
-  const deleteHandler = (id) => {};
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+
+  const deleteHandler = async (id) => {
+    try {
+      const res = await deleteProduct(id);
+      refetch();
+      if (res) {
+        toast.success("Product deleted successfully");
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
@@ -41,6 +55,7 @@ const ProductListScreen = () => {
         </Col>
       </Row>
       {loadingCreate && <Loader />}
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
